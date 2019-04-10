@@ -15,5 +15,6 @@
   "bugs": {
     "url": "https://github.com/mattrudin/techdegree_project10_FullStackApp/issues"
   },
-  "homepage": "https://github.com/mattrudin/techdegree_project10_FullStackApp#readme"
+  "homepage": "https://github.com/mattrudin/techdegree_project10_FullStackApp#readme",
+  "dependencies": {}
 }
