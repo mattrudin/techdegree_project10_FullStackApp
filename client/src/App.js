@@ -5,7 +5,8 @@ import Header from './components/Header'
 // For development purpose only!
 // import Courses from './components/Courses'
 // import CourseDetail from './components/CourseDetail'
-import UserSignIn from './components/UserSignIn'
+// import UserSignIn from './components/UserSignIn'
+import UserSignUp from './components/UserSignUp'
 
 class App extends Component {
   state = {
@@ -16,7 +17,7 @@ class App extends Component {
     return (
       <>
         <Header />
-        <UserSignIn />
+        <UserSignUp />
       </>
     );
   }
