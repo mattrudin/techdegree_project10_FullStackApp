@@ -12,9 +12,9 @@ export default class CourseDetail extends Component {
     }
 
     async componentDidMount() {
-        // TODO / Attention: Hardcoded id!
-        const HARDCODEDid = '57029ed4795118be119cc441'
-        const url = `${URL.getCourseWithID}${HARDCODEDid}`
+        const { match } = this.props
+        const id = match.params.id
+        const url = `${URL.getCourseWithID}${id}`
         try {
             const data = await fetchData(url)
             const { user } = data
