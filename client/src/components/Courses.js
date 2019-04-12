@@ -18,7 +18,7 @@ export default class Courses extends Component {
     render() {
         return (
             <div className="bounds">
-                {this.state.data.map(course => (
+                {this.state.data && this.state.data.map(course => (
                     <article  key={course._id} className="grid-33"><a className="course--module course--link" href="course-detail.html">
                         <h4 className="course--label">Course</h4>
                         <h3 className="course--title">{course.title}</h3>

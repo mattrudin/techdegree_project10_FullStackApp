@@ -15,12 +15,16 @@ export default class CourseDetail extends Component {
         // TODO / Attention: Hardcoded id!
         const HARDCODEDid = '57029ed4795118be119cc441'
         const url = `${URL.getCourseWithID}${HARDCODEDid}`
-        const data = await fetchData(url)
-        const { user } = data
-        this.setState({
-            data,
-            user
-        })
+        try {
+            const data = await fetchData(url)
+            const { user } = data
+            this.setState({
+                data,
+                user
+            })
+        } catch (error) {
+            console.log('An error occured while fetching data: ', error)
+        }
     }
 
     render() {
