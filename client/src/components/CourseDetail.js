@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import ReactMarkdown from 'react-markdown'
-import fetchData from '../utility/fetchData'
-import URL from '../ressources/URL'
+import { getCourseWithID } from '../utility/CRUD'
 import ActionBar from './ActionBar'
 
 
@@ -9,20 +8,19 @@ export default class CourseDetail extends Component {
     state = {
         data: [],
         user: [],
-        courseId: "",
+        courseID: "",
     }
 
     async componentDidMount() {
         const { match } = this.props
-        const courseId = match.params.id
-        const url = `${URL.getCourseWithID}${courseId}`
+        const courseID = match.params.id
         try {
-            const data = await fetchData(url)
+            const data = await getCourseWithID(courseID)
             const { user } = data
             this.setState({
                 data,
                 user,
-                courseId,
+                courseID,
             })
         } catch (error) {
             console.log('An error occured while fetching data: ', error)
@@ -35,7 +33,7 @@ export default class CourseDetail extends Component {
         
         return (
         <div>
-            <ActionBar courseId={this.state.courseId} />
+            <ActionBar courseID={this.state.courseID} />
             <div className="bounds course--detail">
             <div className="grid-66">
                 <div className="course--header">

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { getAllCourses } from '../utility/CRUD'
-import URL from '../ressources/URL'
 import NewCourseButton from './NewCourseButton'
 
 export default class Courses extends Component {
