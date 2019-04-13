@@ -22,3 +22,14 @@ export const getAllCourses = async () => {
         console.log(error)
     }
 }
+
+export const getCourseWithID = async (courseID) => {
+    const url = `${URL.getCourseWithID}${courseID}`
+    try {
+        const rawData = await fetch(url)
+        const data = await rawData.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
