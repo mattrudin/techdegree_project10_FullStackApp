@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import fetchData from '../utility/fetchData'
+import { getAllCourses } from '../utility/CRUD'
 import URL from '../ressources/URL'
 import NewCourseButton from './NewCourseButton'
 
@@ -10,7 +10,7 @@ export default class Courses extends Component {
     }
 
     async componentDidMount() {
-        const data = await fetchData(URL.getAllCourses)
+        const data = await getAllCourses()
         this.setState({
             data
         })

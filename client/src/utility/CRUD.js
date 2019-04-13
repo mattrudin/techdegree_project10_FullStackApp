@@ -12,3 +12,13 @@ export const deleteCourseWithID = (courseID) => {
         console.log(error)
     }
 }
+
+export const getAllCourses = async () => {
+    try {
+        const rawData = await fetch(URL.getAllCourses)
+        const data = await rawData.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
