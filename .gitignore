@@ -1,2 +1,5 @@
 # node modules of client app
 client/node_modules/
+
+# node module
+/node_modules/

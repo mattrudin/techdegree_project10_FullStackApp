@@ -8,19 +8,21 @@ import ActionBar from './ActionBar'
 export default class CourseDetail extends Component {
     state = {
         data: [],
-        user: []
+        user: [],
+        courseId: "",
     }
 
     async componentDidMount() {
         const { match } = this.props
-        const id = match.params.id
-        const url = `${URL.getCourseWithID}${id}`
+        const courseId = match.params.id
+        const url = `${URL.getCourseWithID}${courseId}`
         try {
             const data = await fetchData(url)
             const { user } = data
             this.setState({
                 data,
-                user
+                user,
+                courseId,
             })
         } catch (error) {
             console.log('An error occured while fetching data: ', error)
@@ -33,7 +35,7 @@ export default class CourseDetail extends Component {
         
         return (
         <div>
-            <ActionBar />
+            <ActionBar courseId={this.state.courseId} />
             <div className="bounds course--detail">
             <div className="grid-66">
                 <div className="course--header">

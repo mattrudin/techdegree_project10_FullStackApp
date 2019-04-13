@@ -1,11 +1,18 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { deleteCourseWithID } from '../utility/CRUD'
 
-const ActionBar = () => {
+const ActionBar = ({courseId}) => {
   return (
     <div className="actions--bar">
         <div className="bounds">
-        <div className="grid-100"><span><a className="button" href="update-course.html">Update Course</a><a className="button" href="delete-course.html">Delete Course</a></span><a
-            className="button button-secondary" href="index.html">Return to List</a></div>
+          <div className="grid-100">
+            <span>
+              <Link className="button" to={`/courses/${courseId}/update`}>Update Course</Link>
+              <Link className="button" onClick={() => deleteCourseWithID(courseId)} to="/" >Delete Course</Link>
+            </span>
+            <Link className="button button-secondary" to="/">Return to List</Link>
+          </div>
         </div>
     </div>
   )
