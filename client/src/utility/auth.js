@@ -1,5 +1,8 @@
 export const getAuthHeader = (username, password) => {
-    let header = new Headers()
-    header.append('Authorization', `Basic ${username}:${password}`)
-    return header
+    return new Headers({
+        'Credentials': 'include',
+        'Access-Control-Allow-Credentials': true,
+        'Authorization': `Basic ${username}:${password}`,
+        'Content-Type': 'application/json',
+    })
 }

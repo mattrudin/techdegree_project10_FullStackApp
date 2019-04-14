@@ -37,11 +37,12 @@ export const getCourseWithID = async (courseID) => {
 export const createCourse = (data, header) => {
     const options = {
         method: 'POST',
-        headers: header,
+        body: data,
+        headers: {...header},
     }
-    
+
     try {
-        fetch(data, options)
+        fetch(URL.createCourse, options)
     } catch (error) {
         console.log(error)        
     }
