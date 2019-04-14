@@ -3,3 +3,6 @@ client/node_modules/
 
 # node module
 /node_modules/
+
+# sensititve information
+/client/src/tempLogin.js
