@@ -1,8 +1,18 @@
 import React, { Component } from 'react'
+import { signIn } from '../utility/auth'
+// For development only
+import { username, password } from '../tempLogin'
+
 
 export default class UserSignIn extends Component {
     state = {
 
+    }
+
+    // For development only
+    //TODO: username naming convention: should be emailAddress
+    componentDidMount() {
+        signIn(username, password)    
     }
     
     render() {
