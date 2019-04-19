@@ -17,6 +17,14 @@ export const signIn = async (emailAddress, password) => {
     }
     
     const response = await fetch(URL.getUserAuth, options)
+
     const status = response.status
-    return status === 200 ? true : false
+    const authUserID = response.body._id
+    const isLoggedIn = (status === 200 ? true : false)
+    const authObject = {
+        id: authUserID,
+        isLoggedIn: isLoggedIn,
+    }
+
+    return authObject
 }
