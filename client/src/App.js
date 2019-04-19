@@ -21,14 +21,14 @@ class App extends Component {
     user: {
       id: null,
       isLoggedIn: false,
+      authHeader: null,
     }
   }
 
-  updateUser = ({id, isLoggedIn}) => {
+  updateUser = (authObject) => {
     this.setState({
       user: {
-        id,
-        isLoggedIn
+        ...authObject
       }
     })
   }

@@ -34,11 +34,11 @@ export const getCourseWithID = async (courseID) => {
     }
 }
 
-export const createCourse = (data, header) => {
+export const createCourse = (data, authHeader) => {
     const options = {
         method: 'POST',
         body: data,
-        headers: {...header},
+        headers: authHeader,
     }
 
     try {
