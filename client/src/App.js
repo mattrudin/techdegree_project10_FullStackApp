@@ -26,8 +26,10 @@ class App extends Component {
 
   updateUser = ({id, isLoggedIn}) => {
     this.setState({
-      id,
-      isLoggedIn,
+      user: {
+        id,
+        isLoggedIn
+      }
     })
   }
 
