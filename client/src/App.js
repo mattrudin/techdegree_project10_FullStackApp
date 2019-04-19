@@ -24,9 +24,21 @@ class App extends Component {
     }
   }
 
+  updateUser = ({id, isLoggedIn}) => {
+    this.setState({
+      id,
+      isLoggedIn,
+    })
+  }
+
   render() {
     return (
-      <Provider value={this.state.user}>
+      <Provider value={{
+          user: this.state.user,
+          actions: {
+            updateUser: this.updateUser
+          }
+          }}>
         <BrowserRouter>
           <Header />
           <Switch>

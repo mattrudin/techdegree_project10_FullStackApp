@@ -10,7 +10,7 @@ const ActionBar = (props) => {
   return (
     <Consumer>
       { context => {
-        const { id: authUserID, isLoggedIn } = context
+        const { id: authUserID, isLoggedIn } = context.user
         
         return(
           <div className="actions--bar">
