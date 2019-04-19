@@ -33,7 +33,7 @@ export default class CourseDetail extends Component {
         
         return (
         <div>
-            <ActionBar courseID={this.state.courseID} />
+            <ActionBar data={this.state} />
             <div className="bounds course--detail">
             <div className="grid-66">
                 <div className="course--header">
