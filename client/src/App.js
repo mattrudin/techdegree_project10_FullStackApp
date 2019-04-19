@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import './global.css'
 
+// Context
+import { Provider } from './components/Context'
+
 // App components
 import Header from './components/Header'
 import Courses from './components/Courses'
@@ -15,23 +18,28 @@ import UserSignOut from './components/UserSignOut'
 
 class App extends Component {
   state = {
-    data: []
+    user: {
+      id: null,
+      isLoggedIn: false,
+    }
   }
 
   render() {
     return (
-      <BrowserRouter>
-        <Header />
-        <Switch>
-          <Route exact path="/" component={Courses} />
-          <Route path="/courses/create" component={CreateCourse} />
-          <Route path="/courses/:id/update" component={UpdateCourse} />
-          <Route path="/courses/:id" component={CourseDetail} />
-          <Route path="/signin" component={UserSignIn} />
-          <Route path="/signup" component={UserSignUp} />
-          <Route path="/signout" component={UserSignOut} />
-        </Switch>
-      </BrowserRouter>
+      <Provider value={this.state.user}>
+        <BrowserRouter>
+          <Header />
+          <Switch>
+            <Route exact path="/" component={Courses} />
+            <Route path="/courses/create" component={CreateCourse} />
+            <Route path="/courses/:id/update" component={UpdateCourse} />
+            <Route path="/courses/:id" component={CourseDetail} />
+            <Route path="/signin" component={UserSignIn} />
+            <Route path="/signup" component={UserSignUp} />
+            <Route path="/signout" component={UserSignOut} />
+          </Switch>
+        </BrowserRouter>
+      </Provider>
     );
   }
 }
