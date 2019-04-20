@@ -34,15 +34,22 @@ export const getCourseWithID = async (courseID) => {
     }
 }
 
-export const createCourse = (data, authHeader) => {
+export const createCourse = async (rawData, authHeader) => {
+    const jsonData = JSON.stringify(rawData)
     const options = {
         method: 'POST',
-        body: data,
+        body: jsonData,
         headers: authHeader,
     }
 
     try {
-        fetch(URL.createCourse, options)
+        const rawData = await fetch(URL.createCourse, options)
+        const data = await rawData.json()
+        const statusCode = await rawData.status
+        return {
+            data,
+            statusCode,
+        }
     } catch (error) {
         console.log(error)        
     }
