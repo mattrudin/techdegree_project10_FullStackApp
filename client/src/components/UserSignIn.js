@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom'
 import { signIn } from '../utility/auth'
 import { Consumer } from './Context'
 
+// Original state
+import { stateOrigin } from './state/stateOrigin'
+
 export default class UserSignIn extends Component {
     state = {
-        isLoggedIn: false,
+        ...stateOrigin,
         correctAuth: true,
     }
 

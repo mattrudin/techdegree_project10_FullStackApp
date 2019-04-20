@@ -1,4 +1,6 @@
 import URL from '../ressources/URL'
+// Original state
+import { stateOrigin } from '../components/state/stateOrigin'
 
 export const signIn = async (emailAddress, password) => {
     const header = createAuthHeader(emailAddress, password)
@@ -32,20 +34,21 @@ export const getAuthHeader = authInformation => {
 
 const authObjectFactory = async (data, emailAddress, password) => {
     let authObject = {
-        id: null,
-        isLoggedIn: false,
-        authHeader: null
+        ...stateOrigin,
     }
 
     if(data.status === 200) {
         const jsonData = await data.json()
+        const { firstName, lastName, _id } = jsonData
         const header = createAuthHeader(emailAddress, password)
         const authHeader = header.get('Authorization')
         authObject = {
-            id: jsonData._id,
+            id: _id,
             isLoggedIn: true,
-            authHeader
-    }
+            authHeader,
+            firstName,
+            lastName,
+        }
     }
 
     return authObject
