@@ -15,13 +15,17 @@ import UserSignUp from './components/UserSignUp'
 import UserSignIn from './components/UserSignIn'
 import UserSignOut from './components/UserSignOut'
 
+// Original state
+import { stateOrigin } from './components/state/stateOrigin'
+
+//HOC
+import PrivateRoute from './components/hoc/PrivateRoute'
+
 
 class App extends Component {
   state = {
     user: {
-      id: null,
-      isLoggedIn: false,
-      authHeader: null,
+      ...stateOrigin,
     }
   }
 
@@ -50,7 +54,7 @@ class App extends Component {
             <Route path="/courses/:id" component={CourseDetail} />
             <Route path="/signin" component={UserSignIn} />
             <Route path="/signup" component={UserSignUp} />
-            <Route path="/signout" component={UserSignOut} />
+            <Route path="/signout" render={ () => <UserSignOut updateUser={this.updateUser}/>} />
           </Switch>
         </BrowserRouter>
       </Provider>
