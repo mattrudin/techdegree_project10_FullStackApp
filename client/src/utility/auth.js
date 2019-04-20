@@ -41,7 +41,6 @@ const authObjectFactory = async (data, emailAddress, password) => {
         const jsonData = await data.json()
         const header = createAuthHeader(emailAddress, password)
         const authHeader = header.get('Authorization')
-        console.log(authHeader)
         authObject = {
             id: jsonData._id,
             isLoggedIn: true,
