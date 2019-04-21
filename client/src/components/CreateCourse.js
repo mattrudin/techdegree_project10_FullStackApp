@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { Form, Field } from 'react-final-form'
 import { Consumer } from './Context'
 import { createCourse } from '../utility/CRUD'
-import { getAuthHeader } from '../utility/auth'
 
 export default class CreateCourse extends Component {
     state={
@@ -20,8 +19,7 @@ export default class CreateCourse extends Component {
 
                     const onSubmit = async (values) => {
                         const { authHeader } = context.user
-                        const header = getAuthHeader(authHeader)
-                        const { data, statusCode} = await createCourse(values, header)
+                        const { data, statusCode } = await createCourse(values, authHeader)
                         
                         if(statusCode === 201) {
                             this.setState({

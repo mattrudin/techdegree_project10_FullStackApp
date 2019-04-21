@@ -1,21 +1,39 @@
 import URL from '../ressources/URL'
 import { getAuthHeader } from './auth'
 
-export const deleteCourseWithID = async (courseID, authHeader) => {
-    const url = `${URL.deleteCourseWithID}${courseID}`
+/************************************************************************************
+Create
+************************************************************************************/
+export const createCourse = async (rawData, authHeader) => {
+    const jsonData = JSON.stringify(rawData)
     const header = getAuthHeader(authHeader)
     const options = {
-        method: 'DELETE',
+        method: 'POST',
+        body: jsonData,
         headers: header,
     }
-    
+    let data = {
+        error: 'none',
+    }
+
     try {
-        await fetch(url, options)
+        const rawData = await fetch(URL.createCourse, options)
+        const statusCode = await rawData.status
+        if(statusCode !== 201) data = await rawData.json()
+        
+        return {
+            data,
+            statusCode,
+        }
     } catch (error) {
-        console.log(error)
+        console.log(error)        
     }
 }
 
+
+/************************************************************************************
+Read
+************************************************************************************/
 export const getAllCourses = async () => {
     try {
         const rawData = await fetch(URL.getAllCourses)
@@ -37,23 +55,27 @@ export const getCourseWithID = async (courseID) => {
     }
 }
 
-export const createCourse = async (rawData, authHeader) => {
-    const jsonData = JSON.stringify(rawData)
-    const options = {
-        method: 'POST',
-        body: jsonData,
-        headers: authHeader,
-    }
 
+/************************************************************************************
+Update
+************************************************************************************/
+
+
+
+/************************************************************************************
+Delete
+************************************************************************************/
+export const deleteCourseWithID = async (courseID, authHeader) => {
+    const url = `${URL.deleteCourseWithID}${courseID}`
+    const header = getAuthHeader(authHeader)
+    const options = {
+        method: 'DELETE',
+        headers: header,
+    }
+    
     try {
-        const rawData = await fetch(URL.createCourse, options)
-        const data = await rawData.json()
-        const statusCode = await rawData.status
-        return {
-            data,
-            statusCode,
-        }
+        await fetch(url, options)
     } catch (error) {
-        console.log(error)        
+        console.log(error)
     }
 }
