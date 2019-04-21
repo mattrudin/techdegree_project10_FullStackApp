@@ -10,18 +10,20 @@ const ActionBar = (props) => {
   return (
     <Consumer>
       { context => {
-        const { id: authUserID, isLoggedIn } = context.user
+        const { id: authUserID, isLoggedIn, authHeader } = context.user
         
         return(
           <div className="actions--bar">
               <div className="bounds">
                 <div className="grid-100">
-                  { isLoggedIn && 
+                  { 
+                    isLoggedIn && 
                     courseUserId === authUserID &&
                     <span>
                       <Link className="button" to={`/courses/${courseID}/update`}>Update Course</Link>
-                      <Link className="button" onClick={() => deleteCourseWithID(courseID)} to="/" >Delete Course</Link>
-                    </span>}
+                      <Link className="button" onClick={() => deleteCourseWithID(courseID, authHeader)} to="/" >Delete Course</Link>
+                    </span>
+                  }
                   <Link className="button button-secondary" to="/">Return to List</Link>
                 </div>
               </div>

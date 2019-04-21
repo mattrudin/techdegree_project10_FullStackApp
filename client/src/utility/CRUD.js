@@ -1,13 +1,16 @@
 import URL from '../ressources/URL'
+import { getAuthHeader } from './auth'
 
-export const deleteCourseWithID = (courseID) => {
+export const deleteCourseWithID = async (courseID, authHeader) => {
     const url = `${URL.deleteCourseWithID}${courseID}`
+    const header = getAuthHeader(authHeader)
     const options = {
         method: 'DELETE',
+        headers: header,
     }
     
     try {
-        fetch(url, options)
+        await fetch(url, options)
     } catch (error) {
         console.log(error)
     }
