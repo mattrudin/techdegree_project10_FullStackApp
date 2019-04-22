@@ -1,5 +1,5 @@
 import URL from '../ressources/URL'
-import { getAuthHeader } from './auth'
+import { getAuthHeader, getHeader } from './auth'
 
 /************************************************************************************
 Create
@@ -30,6 +30,31 @@ export const createCourse = async (rawData, authHeader) => {
     }
 }
 
+export const createUser = async (rawData) => {
+    const jsonData = JSON.stringify(rawData)
+    const header = getHeader()
+    const options = {
+        method: 'POST',
+        body: jsonData,
+        headers: header,
+    }
+    let data = {
+        error: 'none',
+    }
+
+    try {
+        const rawData = await fetch(URL.createUser, options)
+        const statusCode = await rawData.status
+        if(statusCode !== 201) data = await rawData.json()
+        
+        return {
+            data,
+            statusCode,
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 /************************************************************************************
 Read

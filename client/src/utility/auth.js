@@ -32,6 +32,14 @@ export const getAuthHeader = authInformation => {
     })
 }
 
+export const getHeader = () => {
+    return new Headers({
+        'credentials': 'include',
+        'Access-Control-Allow-Credentials': true,
+        'Content-Type': 'application/json',
+    })
+}
+
 const authObjectFactory = async (data, emailAddress, password) => {
     let authObject = {
         ...stateOrigin,
