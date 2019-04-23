@@ -42,7 +42,7 @@ export default class UserSignUp extends Component {
     }
 
     render() {
-        const { passwordError, error } = this.state
+        const { passwordError, error, isCreated } = this.state
 
         const ValidationView = () => (
             <div>
@@ -74,35 +74,49 @@ export default class UserSignUp extends Component {
             </div>
         )
 
+        const SignUpSuccessView = () => (
+            <div className="grid-66 centered signin">
+                <h1>Account successfully created!</h1>
+                <Link className="button" to="/signin" >Sign In</Link>
+                <Link className="button button-secondary" to="/" >To course list</Link>
+            </div>
+        )
+
+        const SignUpView = () => (
+            <div className="grid-33 centered signin">
+                <h1>Sign Up</h1>
+                {
+                    (passwordError || error) &&
+                    <ValidationView />
+                }
+                <Form
+                    onSubmit={this.onSubmit}
+                    render={ ({ handleSubmit, values }) => (
+                        <form onSubmit={handleSubmit}>
+                            <Field name="firstName" component="input" placeholder="First Name" />
+                            <Field name="lastName" component="input" placeholder="Last Name" />
+                            <Field name="emailAddress" component="input" placeholder="Email Address" />
+                            <Field name="password" component="input" type="password" placeholder="Password" autoComplete="password" />
+                            <Field name="confirmPassword" component="input" type="password" placeholder="Confirm Password" autoComplete="password" />
+                            <div className="grid-100 pad-bottom">
+                                <Link className="button" onClick={handleSubmit} to="" >Sign Up</Link>
+                                <Link className="button button-secondary" to="/" >Cancel</Link>
+                            </div>
+                        </form>
+                    )}
+                />
+                <p>&nbsp;</p>
+                <p>Already have a user account? <Link to="/signin">Click here</Link> to sign in!</p>
+            </div>
+        )
+
         return (
             <div className="bounds">
-                <div className="grid-33 centered signin">
-                    <h1>Sign Up</h1>
-                    {
-                        (passwordError || error) &&
-                        <ValidationView />
-                    }
-                    <Form
-                        onSubmit={this.onSubmit}
-                        render={ ({ handleSubmit, values }) => (
-                            <form onSubmit={handleSubmit}>
-                                <Field name="firstName" component="input" placeholder="First Name" />
-                                <Field name="lastName" component="input" placeholder="Last Name" />
-                                <Field name="emailAddress" component="input" placeholder="Email Address" />
-                                <Field name="password" component="input" type="password" placeholder="Password" autoComplete="password" />
-                                <Field name="confirmPassword" component="input" type="password" placeholder="Confirm Password" autoComplete="password" />
-                                <div className="grid-100 pad-bottom">
-                                    <Link className="button" onClick={handleSubmit} to="" >Sign Up</Link>
-                                    <Link className="button button-secondary" to="/" >Cancel</Link>
-                                </div>
-                                {/* for debugging only */}
-                                <pre>{JSON.stringify(values, 0, 2)}</pre>
-                            </form>
-                        )}
-                    />
-                    <p>&nbsp;</p>
-                    <p>Already have a user account? <Link to="/signin">Click here</Link> to sign in!</p>
-                </div>
+                {
+                    isCreated ?
+                    <SignUpSuccessView /> :
+                    <SignUpView />
+                }
             </div>
         )
     }
