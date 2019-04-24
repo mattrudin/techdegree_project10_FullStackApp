@@ -84,7 +84,32 @@ export const getCourseWithID = async (courseID) => {
 /************************************************************************************
 Update
 ************************************************************************************/
+export const updateCourseWithID = async (rawData, courseID, authHeader) => {
+    const jsonData = JSON.stringify(rawData)
+    const url = `${URL.updateCourseWithID}${courseID}`
+    const header = getAuthHeader(authHeader)
+    const options = {
+        method: 'PUT',
+        body: jsonData,
+        headers: header,
+    }
+    let data = {
+        error: 'none',
+    }
 
+    try {
+        const rawData = await fetch(url, options)
+        const statusCode = await rawData.status
+        if(statusCode !== 204) data = await rawData.json()
+        
+        return {
+            data,
+            statusCode,
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 /************************************************************************************

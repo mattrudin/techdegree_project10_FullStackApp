@@ -5,6 +5,7 @@ const URL = {
     createCourse: 'http://localhost:5000/api/courses/',
     getUserAuth: 'http://localhost:5000/api/users',
     createUser: 'http://localhost:5000/api/users',
+    updateCourseWithID: 'http://localhost:5000/api/courses/',
 }
 
 export default URL

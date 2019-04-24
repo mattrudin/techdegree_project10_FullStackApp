@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Field } from 'react-final-form'
-import { getCourseWithID } from '../utility/CRUD'
+import { getCourseWithID, updateCourseWithID } from '../utility/CRUD'
+import { Consumer } from './Context'
 
 export default class UpdateCourse extends Component {
   state = {
     data: [],
     user: [],
     courseID: "",
+    isUpdated: false,
+    error: null,
   }
 
   async componentDidMount() {
@@ -26,59 +29,97 @@ export default class UpdateCourse extends Component {
     }
   }
 
-  onSubmit = () => {
-    console.log('test')
-  }
-
+  
   render() {
     const { firstName, lastName } = this.state.user
-    const { match } = this.props
-    const courseId = match.params.id
-    const { description} = this.state.data
-
+    const { courseID } = this.state
+    
     return (
-        <div className="bounds course--detail">
-        <h1>Update Course</h1>
-        <div>
-        <Form 
-          onSubmit={this.onSubmit}
-          initialValues={this.state.data}
-          render={ ({ handleSubmit }) => (
-              <form onSubmit={handleSubmit}>
-                  <div className="grid-66">
-                      <div className="course--header">
-                          <h4 className="course--label">Course</h4>
-                          <Field name="title" component="input" className="input-title course--title--input" placeholder="Course title..." />
-                          <p>By {firstName} {lastName}</p>
-                      </div>
-                      <div className="course--description">
-                        <Field name="description" component="textarea" className="" placeholder="Course description..." defaultValue={description} />
-                      </div>
-                  </div>
-                  <div className="grid-25 grid-right">
-                      <div className="course--stats">
-                          <ul className="course--stats--list">
-                          <li className="course--stats--list--item">
-                              <h4>Estimated Time</h4>
-                                <Field name="estimatedTime" component="input" className="course--time--input" placeholder="Hours" />
-                          </li>
-                          <li className="course--stats--list--item">
-                              <h4>Materials Needed</h4>
-                                <Field name="materialsNeeded" component="textarea" className="" placeholder="List materials..." />
-                          </li>
-                          </ul>
-                      </div>
-                  </div>
-                  <div className="grid-100 pad-bottom">
-                      <Link className="button" type="submit" to={`/courses/${courseId}`} >Update Course</Link>
-                      <Link className="button button-secondary" to={`/courses/${courseId}`} >Cancel</Link>
-                  </div>
-              </form>
-            )
+      <Consumer>
+        {context => {
+          const { isCreated } = this.state
+
+          const onSubmit = async (values) => {
+            const { authHeader } = context.user
+            const { _id: courseID } = values
+            const { data, statusCode } = await updateCourseWithID(values, courseID, authHeader)
+
+            if(statusCode === 204) {
+              this.setState({
+                  isCreated: true,
+              })
+            } else {
+                const { error } = data
+                this.setState({
+                    error
+                })
+            }
           }
-          />
-        </div>
-      </div>
+
+          const UpdateCourseView = () => (
+            <>
+              <h1>Update Course</h1>
+              <div>
+              <Form 
+                onSubmit={onSubmit}
+                initialValues={this.state.data}
+                render={ ({ handleSubmit }) => (
+                    <form onSubmit={handleSubmit}>
+                        <div className="grid-66">
+                            <div className="course--header">
+                                <h4 className="course--label">Course</h4>
+                                <Field name="title" component="input" className="input-title course--title--input" placeholder="Course title..." />
+                                <p>By {firstName} {lastName}</p>
+                            </div>
+                            <div className="course--description">
+                              <Field name="description" component="textarea" className="" placeholder="Course description..." />
+                            </div>
+                        </div>
+                        <div className="grid-25 grid-right">
+                            <div className="course--stats">
+                                <ul className="course--stats--list">
+                                <li className="course--stats--list--item">
+                                    <h4>Estimated Time</h4>
+                                      <Field name="estimatedTime" component="input" className="course--time--input" placeholder="Hours" />
+                                </li>
+                                <li className="course--stats--list--item">
+                                    <h4>Materials Needed</h4>
+                                      <Field name="materialsNeeded" component="textarea" className="" placeholder="List materials..." />
+                                </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="grid-100 pad-bottom">
+                            <Link className="button" onClick={handleSubmit} to="" >Update Course</Link>
+                            <Link className="button button-secondary" to={`/courses/${courseID}`} >Cancel</Link>
+                        </div>
+                    </form>
+                  )
+                }
+                />
+              </div>
+            </>
+          )
+          
+          const CourseUpdatedView = () => (
+            <div className="grid-66 centered signin">
+                <h1>Course successfully updated!</h1>
+                <Link className="button" to={`/courses/${courseID}`} >Return to course</Link>
+                <Link className="button button-secondary" to="/" >To course list</Link>
+            </div>
+          )
+
+          return(
+            <div className="bounds course--detail">
+              {
+                isCreated ?
+                <CourseUpdatedView /> :
+                <UpdateCourseView />
+              }
+            </div> 
+          )
+        }}
+      </Consumer>
     )
   }
 }
