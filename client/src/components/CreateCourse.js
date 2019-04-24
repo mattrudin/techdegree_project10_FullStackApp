@@ -21,6 +21,7 @@ export default class CreateCourse extends Component {
                         const { authHeader } = context.user
                         const { data, statusCode } = await createCourse(values, authHeader)
                         
+                        // Checks if errors from the API occured
                         if(statusCode === 201) {
                             this.setState({
                                 isCreated: true,
@@ -33,6 +34,7 @@ export default class CreateCourse extends Component {
                         }
                     }
 
+                    // View for validation errors
                     const ValidationView = () => (
                         <div>
                             <h2 className="validation--errors--label">Validation errors</h2>
@@ -51,6 +53,7 @@ export default class CreateCourse extends Component {
                         </div>
                     )
 
+                    // Standard view
                     const CreateCourseView = () => (
                         <>
                             <h1>Create Course</h1>
@@ -97,6 +100,7 @@ export default class CreateCourse extends Component {
                         </>
                     )
 
+                    // View after course is successfuly created
                     const CourseCreatedView = () => (
                         <div className="grid-66 centered">
                             <h1>Course successfully created!</h1>

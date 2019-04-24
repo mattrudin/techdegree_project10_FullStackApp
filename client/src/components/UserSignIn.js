@@ -3,8 +3,6 @@ import { Form, Field } from 'react-final-form'
 import { Link } from 'react-router-dom'
 import { signIn } from '../utility/auth'
 import { Consumer } from './Context'
-
-// Original state
 import { stateOrigin } from './state/stateOrigin'
 
 export default class UserSignIn extends Component {
@@ -36,13 +34,7 @@ export default class UserSignIn extends Component {
                         }
                     }
 
-                    const LoggedInView = () => (
-                        <div className="grid-66 centered signin">
-                            <h1>Successfully logged in!</h1>
-                            <Link className="button" to="/" >To course list</Link>
-                        </div>
-                    )
-
+                    // View for validation errors
                     const ValidationView = () => (
                         <div className="validation-errors">
                             <ul>
@@ -51,6 +43,7 @@ export default class UserSignIn extends Component {
                         </div>
                     )
 
+                    // Standard view
                     const NotLoggedInView = () => (
                         <div className="grid-33 centered signin">
                             <h1>Sign In</h1>
@@ -73,6 +66,14 @@ export default class UserSignIn extends Component {
                             />
                             <p>&nbsp;</p>
                             <p>Don't have a user account? <Link to="signup">Click here</Link> to sign up!</p>
+                        </div>
+                    )
+
+                    // View after user is successfuly logged in
+                    const LoggedInView = () => (
+                        <div className="grid-66 centered signin">
+                            <h1>Successfully logged in!</h1>
+                            <Link className="button" to="/" >To course list</Link>
                         </div>
                     )
                     

@@ -8,12 +8,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
             { context => {
                 const { isLoggedIn } = context.user
                 return(
-                    isLoggedIn
-                        ? <Component {...props} />
-                        : <Redirect to={{
-                            pathname: "/signin",
-                            state: { from: props.location }
-                          }} />
+                    isLoggedIn ? 
+                    // If the user is logged in, show the component
+                    <Component {...props} /> :
+                    // Else, redirect to the signIn page
+                    <Redirect to="/signin" />
                 )
             }}
         </Consumer>

@@ -2,6 +2,9 @@ import URL from '../ressources/URL'
 // Original state
 import { stateOrigin } from '../components/state/stateOrigin'
 
+/************************************************************************************
+Sign In function
+************************************************************************************/
 export const signIn = async (emailAddress, password) => {
     const header = createAuthHeader(emailAddress, password)
     const options = {
@@ -17,12 +20,17 @@ export const signIn = async (emailAddress, password) => {
     }
 }
 
+/************************************************************************************
+Header functions
+************************************************************************************/
+// Creates the auth header
 export const createAuthHeader = (emailAddress, password) => {
     const credentials = `${emailAddress}:${password}`
     const authorization = `Basic ${btoa(credentials)}`
     return getAuthHeader(authorization)
 }
 
+// Returns the header with Basic Auth properties
 export const getAuthHeader = authInformation => {
     return new Headers({
         'credentials': 'include',
@@ -32,6 +40,7 @@ export const getAuthHeader = authInformation => {
     })
 }
 
+// Returns the standard header (without auth)
 export const getHeader = () => {
     return new Headers({
         'credentials': 'include',
@@ -40,6 +49,7 @@ export const getHeader = () => {
     })
 }
 
+// Returns an authe object for the sigIn function
 const authObjectFactory = async (data, emailAddress, password) => {
     let authObject = {
         ...stateOrigin,

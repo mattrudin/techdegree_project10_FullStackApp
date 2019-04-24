@@ -7,17 +7,19 @@ const Header = () => (
         { context => {
             const { isLoggedIn, firstName, lastName } = context.user
 
-            const LoggedInNav = () => (
-                <nav>
-                    <span>Welcome {firstName} {lastName}</span>
-                    <Link to="/signout" className="signout">Sign Out</Link>
-                </nav>
-            )
-
+            // Standard view: User is not logged in
             const NotLoggedInNav = () => (
                 <nav>
                     <Link to="/signup" className="signup">Sign Up</Link>
                     <Link to="/signin" className="signin">Sign In</Link>
+                </nav>
+            )
+
+            // View after user is successfuly logged in
+            const LoggedInNav = () => (
+                <nav>
+                    <span>Welcome {firstName} {lastName}</span>
+                    <Link to="/signout" className="signout">Sign Out</Link>
                 </nav>
             )
 

@@ -12,6 +12,7 @@ export default class UserSignUp extends Component {
 
     onSubmit = async (values) => {
         const { password, confirmPassword } = values
+        // Validates if both passwords are the same
         const isValid = this.validatePassword(password, confirmPassword)
         if(isValid) {
             this.setState({
@@ -19,6 +20,7 @@ export default class UserSignUp extends Component {
             })
             const { data, statusCode } = await createUser(values)
 
+            // Checks if errors from the API occured
             if(statusCode === 201) {
                 this.setState({
                     isCreated: true,
@@ -37,6 +39,7 @@ export default class UserSignUp extends Component {
         }
     }
 
+    // Validate-function for both passwords
     validatePassword = (password, confirmPassword) => {
         return password === confirmPassword ? true : false
     }
@@ -44,6 +47,7 @@ export default class UserSignUp extends Component {
     render() {
         const { passwordError, error, isCreated } = this.state
 
+        // View for validation errors
         const ValidationView = () => (
             <div>
                 <h2 className="validation--errors--label">Validation errors</h2>
@@ -74,14 +78,7 @@ export default class UserSignUp extends Component {
             </div>
         )
 
-        const SignUpSuccessView = () => (
-            <div className="grid-66 centered signin">
-                <h1>Account successfully created!</h1>
-                <Link className="button" to="/signin" >Sign In</Link>
-                <Link className="button button-secondary" to="/" >To course list</Link>
-            </div>
-        )
-
+        // Standard view
         const SignUpView = () => (
             <div className="grid-33 centered signin">
                 <h1>Sign Up</h1>
@@ -107,6 +104,15 @@ export default class UserSignUp extends Component {
                 />
                 <p>&nbsp;</p>
                 <p>Already have a user account? <Link to="/signin">Click here</Link> to sign in!</p>
+            </div>
+        )
+
+        // View after user is successfuly created
+        const SignUpSuccessView = () => (
+            <div className="grid-66 centered signin">
+                <h1>Account successfully created!</h1>
+                <Link className="button" to="/signin" >Sign In</Link>
+                <Link className="button button-secondary" to="/" >To course list</Link>
             </div>
         )
 

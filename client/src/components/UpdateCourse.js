@@ -8,11 +8,12 @@ export default class UpdateCourse extends Component {
   state = {
     data: [],
     user: [],
-    courseID: "",
+    courseID: null,
     isUpdated: false,
     error: null,
   }
 
+  // At component mounting: Fetch all details from the course
   async componentDidMount() {
     const { match } = this.props
     const courseID = match.params.id
@@ -44,6 +45,7 @@ export default class UpdateCourse extends Component {
             const { _id: courseID } = values
             const { data, statusCode } = await updateCourseWithID(values, courseID, authHeader)
 
+            // Checks if errors from the API occured
             if(statusCode === 204) {
               this.setState({
                   isCreated: true,
@@ -56,6 +58,7 @@ export default class UpdateCourse extends Component {
             }
           }
 
+          // Standard view
           const UpdateCourseView = () => (
             <>
               <h1>Update Course</h1>
@@ -101,6 +104,7 @@ export default class UpdateCourse extends Component {
             </>
           )
           
+          // View after course is successfuly updated
           const CourseUpdatedView = () => (
             <div className="grid-66 centered signin">
                 <h1>Course successfully updated!</h1>

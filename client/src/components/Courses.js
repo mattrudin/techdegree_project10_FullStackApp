@@ -8,6 +8,7 @@ export default class Courses extends Component {
         data: []
     }
 
+    // At component mounting: Fetch all courses
     async componentDidMount() {
         const data = await getAllCourses()
         this.setState({
