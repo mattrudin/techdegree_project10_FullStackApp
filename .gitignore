@@ -1,6 +1,9 @@
 # node modules of client app
 client/node_modules/
 
+# node modules of api app
+api/node_modules/
+
 # node module
 /node_modules/
 
