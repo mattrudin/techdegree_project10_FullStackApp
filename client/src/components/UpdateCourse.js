@@ -38,13 +38,25 @@ export default class UpdateCourse extends Component {
     return (
       <Consumer>
         {context => {
-          const { isCreated } = this.state
+          const { isCreated, error } = this.state
 
           const onSubmit = async (values) => {
             const { authHeader } = context.user
             const { _id: courseID } = values
+            
+            // Check if title is empty
+            if(values.title === undefined) {
+              // If empty, force empty string
+              values.title = ""
+            }
+            // Check if description is empty
+            if(values.description === undefined) {
+              // If empty, force empty string
+              values.description = ""
+            }
+            
             const { data, statusCode } = await updateCourseWithID(values, courseID, authHeader)
-
+            
             // Checks if errors from the API occured
             if(statusCode === 204) {
               this.setState({
@@ -58,15 +70,37 @@ export default class UpdateCourse extends Component {
             }
           }
 
+          // View for validation errors
+          const ValidationView = () => (
+            <div>
+                <h2 className="validation--errors--label">Validation errors</h2>
+                <div className="validation-errors">
+                    <ul>
+                        { 
+                            error.includes("title") && 
+                            <li>Please provide a value for "Title"</li>
+                        }
+                        {
+                            error.includes("description") && 
+                            <li>Please provide a value for "Description"</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+          )
+
           // Standard view
           const UpdateCourseView = () => (
             <>
               <h1>Update Course</h1>
-              <div>
+              {
+                  error &&
+                  <ValidationView />
+              }
               <Form 
                 onSubmit={onSubmit}
                 initialValues={this.state.data}
-                render={ ({ handleSubmit }) => (
+                render={ ({ handleSubmit, values }) => (
                     <form onSubmit={handleSubmit}>
                         <div className="grid-66">
                             <div className="course--header">
@@ -100,7 +134,6 @@ export default class UpdateCourse extends Component {
                   )
                 }
                 />
-              </div>
             </>
           )
           
